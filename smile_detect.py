@@ -27,27 +27,6 @@ async def detect_smile(gray, frame):
                 #await asyncio.sleep(10)
                 await send_detect_foto('graygirl.jpg')
 
-            
+    #возможно на будущее понадобиться работать с возвращенным кадром        
     return frame
 
-#главная функция
-# def main():
-#     video_capture = cv2.VideoCapture(0)
-#     while True:
-#     # Захватывает video_capture кадр за кадром
-#         _, frame = video_capture.read() 
-#         # Для захвата изображения в монохромном режиме
-#         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-#         # вызывает функцию detect ()
-#         canvas = detect_smile(gray, frame)   
-#         # Отображает результат в камере подачи
-#         cv2.imshow('Video', canvas)
-#         # Сбой управления после нажатия клавиши q
-#         if cv2.waitKey(1) & 0xff == ord('q'):
-#             break
-#     # Отпустите захват, как только закончится вся обработка.
-#     video_capture.release()                                 
-#     cv2.destroyAllWindows()
-
-# if __name__ == '__main__':
-#     main()
