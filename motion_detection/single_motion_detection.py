@@ -2,6 +2,7 @@ import numpy as np
 import imutils
 import cv2
 
+#класс по работе с обработкой движения в кадре (вычисление разницы между предыдущим и текущим кадрами)
 class SingleMotionDetector:
     def __init__(self, accumWeight=0.5):
         #хранение накопленного весового коэффицента
@@ -10,19 +11,18 @@ class SingleMotionDetector:
         self.bg = None
 
     def update(self, image):
-        '''Функция cv2.accumulateWeighted вычисляет взвешенную сумму входного изображения img и накопителя self.bg таким образом,
+        '''метод cv2.accumulateWeighted вычисляет взвешенную сумму входного изображения img и накопителя self.bg таким образом,
         что self.bg становится средним значением последовательности всех полученных кадров, чтобы при следующем кадре можно было
         фиксировать изменение пикселей, а следовательно фиксировать движение. Использует метод скользящего среднего'''
         if self.bg is None:
             self.bg = image.copy().astype("float")
             return
-        # update the background model by accumulating the weighted
-        # average
+        #обновление модели кадра
         cv2.accumulateWeighted(image, self.bg, self.accumWeight)
 
     def detect(self, image, tVal=25):
-        #вычисление абсолютной разницы между фоновой моделью
-        # и переданным изображением, а затем предел значения дельта-изображения
+        '''вычисление абсолютной разницы между фоновой моделью
+         и переданным изображением, а затем предел значения дельта-изображения'''
         delta = cv2.absdiff(self.bg.astype("uint8"), image)#нахождение разницы двух кадров, которая проявляется лишь при изменении одного из них
         thresh = cv2.threshold(delta, tVal, 255, cv2.THRESH_BINARY)[1]#метод для выделения кромки объекта белым цветом, чтобы потом найти контуры
         #эрозия и делотация
