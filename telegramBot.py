@@ -2,7 +2,7 @@ import telegram
 import os
 
 
-TOKEN = '1851824123:AAFt0LwJbhTJghXLpKS34ZrY2KKaxJ4AJF8'
+TOKEN = 'enter_your_token'
 bot = telegram.Bot(token=TOKEN)
 
 
